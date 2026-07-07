@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local data and outputs
+data/raw/
+data/private/
+data/*.csv
+data/*.xlsx
+data/*.xls
+data/*.mat
+data/*.zip
+results/*
+!results/README.md
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Manuscripts under review should not be committed by default
+*.pdf
+!docs/*.pdf
