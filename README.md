@@ -1,8 +1,8 @@
 # ECG-Lifestyle Cardiovascular Phenotyping
 
-Code release for ECG-derived cardiovascular phenotype analysis and lifestyle-based phenotype prediction in young adults.
+Code for ECG-derived cardiovascular phenotype analysis and lifestyle-based phenotype prediction in young adults.
 
-This repository supports the following conference manuscripts:
+This repository supports the following conference manuscripts which are under review:
 
 1. **Interpretable Lifestyle-Based Prediction of ECG-Derived Cardiovascular Phenotypes**  
    IEEE International Conference on Signal Processing, Information, Communication and Systems (SPICSCON), 2026
