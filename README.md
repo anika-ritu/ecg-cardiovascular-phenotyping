@@ -1,110 +1,123 @@
-# ECG-Derived Cardiovascular Phenotyping
+# ECG-Lifestyle Cardiovascular Phenotyping
 
-This repository contains the cleaned research code for Anika Tasnim Ritu's M.Sc. thesis work on ECG-derived cardiovascular phenotyping and lifestyle-associated cardiovascular profiles in young adults.
+Code release for ECG-derived cardiovascular phenotype analysis and lifestyle-based phenotype prediction in young adults.
 
-The code was cleaned from the original thesis notebook and organized for private review/reproducibility. The related conference manuscripts are not accepted yet, so this repository should remain **private** until the work is accepted or the author decides what can be released publicly.
+This repository supports the following conference manuscripts:
 
-## Project summary
+1. **Interpretable Lifestyle-Based Prediction of ECG-Derived Cardiovascular Phenotypes**  
+   IEEE International Conference on Signal Processing, Information, Communication and Systems (SPICSCON), 2026
 
-The analysis uses short-duration resting ECG recordings and lifestyle variables to study cardiovascular phenotypes among young adults. The workflow includes:
+2. **Unsupervised ECG-Lifestyle Clustering for Early Cardiovascular Phenotyping in Young Adults**  
+   IEEE International Conference on Signal Processing, Information, Communication and Systems (SPICSCON), 2026
 
-- ECG preprocessing using Butterworth bandpass filtering and 50 Hz notch filtering
-- ECG signal-quality assessment before and after filtering
-- Fiducial point detection and ECG feature extraction
-- HRV, amplitude-based, interval-based, and morphology-based feature computation
-- Correlation-based feature selection
-- Lifestyle variable engineering, including MVPA, BMI, diet score, and sleep quality
+The repository is a **code-only release**. Raw ECG recordings, lifestyle questionnaire data, intermediate spreadsheets, and participant-level outputs are not included.
+
+## What this code does
+
+The workflow combines short-duration resting ECG recordings with lifestyle variables to study early cardiovascular phenotypes among young adults. It includes:
+
+- ECG filtering with Butterworth bandpass and 50 Hz notch filters
+- signal-quality metrics before and after filtering
+- R-peak and fiducial-point based ECG feature extraction
+- HRV, amplitude, interval, and morphology features
+- lifestyle feature preparation, including MVPA, BMI, diet, and sleep indicators
+- correlation-based feature screening
 - K-means clustering for phenotype discovery
-- PCA, t-SNE, elbow, and silhouette analyses for cluster interpretation
-- Supervised phenotype prediction using Logistic Regression, LDA, and linear SVM
-- SHAP-based explainability for lifestyle-based phenotype prediction
-- Statistical comparisons across activity, BMI, sleep, diet, and cluster groups
+- PCA, t-SNE, elbow, and silhouette diagnostics
+- supervised phenotype prediction with Logistic Regression, LDA, and linear SVM
+- SHAP-based interpretation of lifestyle-driven phenotype prediction
+- statistical comparison of ECG-derived phenotypes across lifestyle groups
 
 ## Repository structure
 
 ```text
 .
-├── notebooks/
-│   └── ECG_MSC_Final_cleaned.ipynb
-├── data/
-│   └── README.md
-├── results/
-│   └── README.md
-├── CLEANUP_REPORT.md
-├── requirements.txt
-├── .gitignore
-└── README.md
+|-- src/
+|   `-- ecg_phenotyping/
+|       |-- __init__.py
+|       |-- config.py
+|       |-- preprocessing.py
+|       |-- features.py
+|       |-- lifestyle.py
+|       |-- clustering.py
+|       |-- modeling.py
+|       |-- pipeline.py
+|       |-- statistics.py
+|       `-- visualization.py
+|-- scripts/
+|   `-- run_pipeline.py
+|-- notebooks/
+|   `-- ECG_MSC_Final_cleaned.ipynb
+|-- data/
+|   `-- README.md
+|-- results/
+|   `-- README.md
+|-- docs/
+|   `-- publication_notes.md
+|-- requirements.txt
+|-- .gitignore
+`-- README.md
 ```
-
-## Notebook
-
-The cleaned notebook is:
-
-```text
-notebooks/ECG_MSC_Final_cleaned.ipynb
-```
-
-Cleaning summary:
-
-- Original notebook: 90 cells, about 29.5 MB
-- Cleaned notebook: 49 cells, about 149 KB
-- Kept final/relevant code cells: 38
-- Removed old/debug/duplicate cells: 52
-- Removed embedded notebook outputs for GitHub cleanliness
-
-See `CLEANUP_REPORT.md` for the detailed keep/remove decision for each original cell.
 
 ## Data availability
 
-Raw ECG recordings and lifestyle data are not included in this repository because they may contain participant-level research data. To reproduce the analysis, place approved/anonymized data in the `data/` folder following the instructions in `data/README.md`.
+No dataset is distributed with this repository.
 
-The current notebook still contains some original Google Colab/Drive paths such as `/content/drive/...`. Before public release, these paths should be converted to relative paths such as:
-
-```python
-DATA_DIR = "../data"
-RESULTS_DIR = "../results"
-```
+To reproduce the full analyses, place approved anonymized files locally under `data/` using the layout described in [`data/README.md`](data/README.md). The `.gitignore` file is configured to prevent accidental publication of common data formats such as `.csv`, `.xlsx`, `.mat`, `.npy`, and raw signal files.
 
 ## Installation
 
-Create a Python environment and install the required packages:
-
 ```bash
+git clone https://github.com/anika-ritu/ecg-cardiovascular-phenotyping.git
+cd ecg-cardiovascular-phenotyping
+python -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
 Recommended Python version: 3.10 or newer.
 
-## Main dependencies
+## Usage
 
-- numpy
-- pandas
-- scipy
-- scikit-learn
-- matplotlib
-- seaborn
-- statsmodels
-- shap
-- scikit-image
-- openpyxl
+The repository provides two complementary entry points.
 
-## Reproducibility notes
-
-The repository currently provides a cleaned notebook. The next recommended step is to refactor the workflow into scripts:
+### 1. Modular pipeline
 
 ```text
-src/preprocessing.py
-src/features.py
-src/clustering.py
-src/classification.py
-src/statistics.py
+scripts/run_pipeline.py
 ```
 
-This would make the work easier to run, test, and cite.
+This script gives a clean public-facing pipeline for approved local data:
 
-## Status
+```bash
+python scripts/run_pipeline.py --data-dir data --results-dir results
+```
 
-Private research repository. Related conference manuscripts are not accepted yet.
+It expects local, non-public input files under `data/processed/` and writes generated outputs under `results/`. Because the participant-level dataset is not distributed, the script is intentionally data-path driven rather than bundled with example participant files.
+
+### 2. Cleaned research notebook
+
+```text
+notebooks/ECG_MSC_Final_cleaned.ipynb
+```
+
+The notebook preserves the fuller thesis/conference workflow for transparency, including preprocessing, feature extraction, lifestyle integration, clustering, explainability, supervised prediction, visualization, and statistical analyses.
+
+Reusable functions are organized under `src/ecg_phenotyping/`. Example imports:
+
+```python
+from ecg_phenotyping.preprocessing import preprocess_ecg
+from ecg_phenotyping.features import extract_ecg_features
+from ecg_phenotyping.pipeline import run_phenotyping_pipeline
+from ecg_phenotyping.clustering import run_kmeans
+from ecg_phenotyping.modeling import train_linear_models
+```
+
+Because the research data are not public, the repository does not include a one-command reproduction script with bundled inputs. The modules are written so approved local data can be connected without changing the public code release.
+
+## Citation
+
+If you use this repository, please cite the associated SPICSCON 2026 manuscripts once the final citation details are available.
 
 ## Author
 

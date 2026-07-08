@@ -1,6 +1,11 @@
 # Python
 __pycache__/
 *.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
 .venv/
 venv/
 env/
@@ -8,23 +13,26 @@ env/
 # Jupyter
 .ipynb_checkpoints/
 
-# Local data and outputs
-data/raw/
-data/private/
-data/*.csv
-data/*.xlsx
-data/*.xls
-data/*.mat
-data/*.zip
-results/*
+# Data files: do not publish participant-level or derived datasets
+data/**/*.csv
+data/**/*.tsv
+data/**/*.xlsx
+data/**/*.xls
+data/**/*.mat
+data/**/*.npy
+data/**/*.npz
+data/**/*.pkl
+data/**/*.pickle
+data/**/*.h5
+data/**/*.hea
+data/**/*.dat
+data/**/*.edf
+
+# Generated outputs
+results/**
 !results/README.md
 
 # OS/editor
 .DS_Store
 Thumbs.db
 .vscode/
-.idea/
-
-# Manuscripts under review should not be committed by default
-*.pdf
-!docs/*.pdf
